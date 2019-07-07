@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</head>
+
+<body>
+
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>F
+    <script>
+        const data = [];
+        const dataSeries = { type: "line" };
+        const dataPoints = [];
+
+        function getData() {
+            $.get("/get-data/random-data", function (response) {
+                dataPoints.push(response);
+
+                dataSeries.dataPoints = dataPoints;
+                data[0] = dataSeries;
+
+                const options = {
+                    zoomEnabled: true,
+                    animationEnabled: true,
+                    title: {
+                        text: "Try Zooming - Panning"
+                    },
+                    axisY: {
+                        includeZero: true
+                    },
+                    data
+                };
+
+                $("#chartContainer").CanvasJSChart(options);
+            })
+        };
+
+        $(document).ready(function () {
+            setInterval(getData, 3000);
+        });
+
+    </script>
+</body>
+
+</html>
